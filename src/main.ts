@@ -8,7 +8,6 @@ if (import.meta.main) {
     async () => {
       const client = await setup();
       console.log("Done with big ben for now");
-      client.destroy();
     },
     {
       timezone: "Europe/Brussels",
