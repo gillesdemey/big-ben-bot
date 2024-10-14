@@ -1,4 +1,4 @@
-# big-deno-bot
+# big-ben-bot
 
 To install dependencies:
 
