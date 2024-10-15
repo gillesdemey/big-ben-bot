@@ -18,8 +18,6 @@ import { getNumberOfChimes } from "./utils.ts";
 const token = process.env.DISCORD_TOKEN;
 const guildId = process.env.GUILD_ID ?? "";
 
-const client = createClient();
-
 const introSoundPath = import.meta.resolve("./assets/intro.mp3");
 const dongSoundPath = import.meta.resolve("./assets/dong.mp3");
 
@@ -96,18 +94,20 @@ function getFirstVoiceChannel(guild: Guild) {
   return voiceChannels.first();
 }
 
-function authenticate(): Promise<void> {
+function authenticate(client: Client) {
   return new Promise((resolve, reject) => {
-    client.once("error", reject);
-    client.once("ready", () => resolve(undefined));
+    client.on("error", reject);
+    client.on("ready", () => resolve(undefined));
 
     client.login(token);
   });
 }
 
 export async function setup() {
+  const client = createClient();
+
   console.log("Authenticating...");
-  await authenticate();
+  await authenticate(client);
   console.log("Authenticated!");
 
   const guild = client.guilds.cache.get(guildId);
